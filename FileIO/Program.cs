@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 
 namespace FileIO
 {
@@ -8,14 +9,26 @@ namespace FileIO
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("I'm Alive!");
-            DisplayImageFiles();
+            Console.WriteLine("Welke zip wilt u analyseren");
+            string ant1 = Console.ReadLine();
+            if(ant1 == "a") { ant1 = @"C:\Users\kevin\source\repos\EF.zip"; }
+
+            Console.WriteLine("Naar waar?");
+            string ant2 = Console.ReadLine();
+            if (ant2 == "a") { ant2 = @"C:\Users\kevin\source\repos\test"; }
+            DisplayImageFiles(ant1,ant2);
         }
 
-        static void DisplayImageFiles()
+        static void DisplayImageFiles(string rawdir, string rawdir2)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"C:\Users\kevin\source\repos\Opdracht_Delegates_en_Events\Opdracht_Delegates_en_Events");
-            DirectoryInfo dir2 = new DirectoryInfo(@"C:\Users\kevin\source\repos\test");
+            DirectoryInfo dir = new DirectoryInfo(rawdir2 + "/unziped");
+            DirectoryInfo dir2 = new DirectoryInfo(rawdir2);
+            //unzip file
+            string startPath = @".\start";
+            string zipPath = @".\result.zip";
+            string extractPath = @".\extract";
+
+            ZipFile.ExtractToDirectory(rawdir, rawdir2 + "/unziped");
             // Get all files with a .cs
             FileInfo[] csFiles = dir.GetFiles("*.cs", SearchOption.AllDirectories);
 
